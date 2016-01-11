@@ -1,0 +1,13 @@
+[package]
+name = "filesystem"
+version = "0.0.1"
+authors = ["arcnmx"]
+
+description = "Filesystem abstraction trait"
+documentation = "http://arcnmx.github.io/filesystem.rs/filesystem/"
+repository = "https://github.com/arcnmx/filesystem.rs"
+readme = "README.md"
+license = "MIT"
+
+[lib]
+path = "src/lib.rs"

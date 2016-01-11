@@ -1,0 +1,37 @@
+language: rust
+rust:
+    - stable
+    - beta
+    - nightly
+sudo: false
+os: linux
+cache:
+    directories:
+        - $HOME/.cargo
+        - target
+matrix:
+    fast_finish: true
+    allow_failures:
+        - rust: nightly
+env:
+    global:
+        - secure: "jcwyjtwgxfewDaG6n5BxJBSU8Preyvmb2szxSGR2zqY7XPRrYRzwjUAwNWtMjHZ+AfvB311t/WLTlf+ShE1RCtn7YVp3xgkgTZCn2DwcTvs2jRLNaNq4RlqgJWx1DjgJlJY3PDTDRs3rKBJnnv9Qi3rnaPho3h+rYVre68iyjdeVX4JtnZQ7UkjyMCl8VqKVVnOMThvO+CR0y0DC7HBIoC30ka8uJAg68ki+qH6SSPpLcfq/lDtdEvBWE9HHpc1z96BHl97ptEPUn7/7QmtRJo6Yl78ltpnJMshrBKF+Yfx9SLBOSQE9K2anW8GWF1CQPXuozgbHgXuGZl9jEGCyJOhOhVVqphSeUQUHt7OQGNIiOYIjJG1Pn8H9NJ6pVMAYfNANdIwrnR3c765PThe6re6d+1VywP+CemNzBpUH1sSDf7emFtvEUQdyf/BqYMGekUzvVpy6/CysEDD1X9lLqJIkDbBGT7icObuCKJeinRSsyQ37JFm8545LQkP6PcTDi+UYU9KUPHB32WWGveQjptBAuFZ2UkJe0NLkjKU29RlEB7ssks2nq348Jd9cSpriHLRBkY5jb5ismZQU2fj1n6M6mwaC5Xss547VOUKOAuFgIUtkwYuw2btUGCRIIXBV5ZJgogz58Ah5yaTCc6pavv8kZ5fLN1H63SXkI5PTcVo="
+        - secure: "TqoNYW8z0UGKDrjjhVMvlguM7E0MB90dP6npKgpeRXOBndT7tLHLWjoJMnrQ6bYqHP3SbO7iLIS/CO+tloNuFHLkZNW7TButy9VaLGlELVfikSJoIh4WBaJe+zhkarxwc+WqdFoWkPKYb0AjOMmlgJSJ93FZWQqXC0wosccOHoEHCOUaYuJb2J2JwUZY3RfOoqzzoGwy5U7CqCqy3HO8Mb1d6l59MWC9LXWO43UeS+Qhg4kMVL4UUGHX3No4XxooV10zUit0//v/wFjeP1IWZHHGkK4kvu3mMB7gireXTlcbTqwy+MRK30/hD/aMa1BnN6gkoqwOapsGhH1k66Vn9ngAR+bGdOHxQFjKW1EFY2LQZNRdz6P7YHJ9p7Hm4294csn7vbV4R41i4QJg4WpG/6luq9znjq+E2EyVW7M6ZCkJm5eA+5N8r3gLdjZihyU69YzUxU+CYpHzg4PcKBlGCa6RHIPRfohPiT4QltUK98c9E+T1Yr+mVoMzroK8BcYvggskJCVDqAI8/nlRvW1e+SFXby7USiMD2gh4xP+O8x8ClEImvExP/Jd8xIfJ2gYgs2m0WcCvuC7O7w/q/seCNo6XqR2FybxOnQdOpSXNeQ03W4tXRdajcc6EF+idIcMQWv7kgcIixfZ2W9IGsoz9iCAG0CoxfqA943NeypNLH4M="
+before_script:
+    - curl -L https://github.com/arcnmx/ci/archive/master.tar.gz | tar -xzC $HOME && . $HOME/ci-master/src
+
+script:
+    - cargo test
+
+deploy:
+    provider: script
+    script: "true"
+    on:
+        all_branches: true
+        condition: "$TRAVIS_RUST_VERSION = stable"
+
+before_deploy:
+    - cargo doc
+
+after_deploy:
+    - cargo pages-publish
