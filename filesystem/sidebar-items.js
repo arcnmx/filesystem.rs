@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["FileDynamic",""],["FilesystemDynamic",""],["StdFilesystem",""]],"trait":[["Filesystem",""],["ReadWriteSeek",""]],"type":[["FilesystemObject",""]]});
